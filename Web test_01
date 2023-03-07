@@ -1,0 +1,31 @@
+<div id="table"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    var spreadsheetId = "1XV0tfL4zBMx5r6TSoNa61S6OicYuGf5M8XNQJf9o-gQ";
+    var sheetName = "Folha1";
+    var apiKey = "AIzaSyBDK3kg5r6MyAgFelEMVyEHeg1GaXD6Hzo";
+
+    function updateTable() {
+        var url = "https://sheets.googleapis.com/v4/spreadsheets/" + spreadsheetId + "/values/" + sheetName + "?key=" + apiKey;
+
+        $.get(url, function(data) {
+            var rows = data.values;
+
+            var table = "<table>";
+            for (var i = 0; i < rows.length; i++) {
+                table += "<tr>";
+                for (var j = 0; j < rows[i].length; j++) {
+                    table += "<td>" + rows[i][j] + "</td>";
+                }
+                table += "</tr>";
+            }
+            table += "</table>";
+
+            $("#table").html(table);
+        });
+    }
+
+    updateTable();
+    setInterval(updateTable, 5000);
+</script>
